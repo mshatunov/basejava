@@ -16,8 +16,29 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        storage[storageSize] = r;
-        storageSize++;
+
+        if (storageSize + 1 > MAX_STORAGE_SIZE) {
+            System.out.println("ERROR: Maximum storage size reached");
+            return;
+        }
+
+        if (get(r.getUuid()) != null) {
+            System.out.println("ERROR: Resume already exists");
+            return;
+        } else {
+            storage[storageSize] = r;
+            storageSize++;
+        }
+
+    }
+
+    public void update(Resume r) {
+        if (get(r.getUuid()) != null) {
+            //update
+        } else {
+            System.out.println("ERROR: Resume doesn't exist");
+            return;
+        }
     }
 
     public Resume get(String uuid) {
@@ -36,15 +57,20 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
 
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[storageSize - 1];
-                storage[storageSize - 1] = null;
-                storageSize--;
-                return;
-            } else if (storage[i] == null) {
-                return;
+        if (get(uuid) != null) {
+            for (int i = 0; i < storage.length; i++) {
+                if (storage[i].getUuid().equals(uuid)) {
+                    storage[i] = storage[storageSize - 1];
+                    storage[storageSize - 1] = null;
+                    storageSize--;
+                    return;
+                } else if (storage[i] == null) {
+                    return;
+                }
             }
+        } else {
+            System.out.println("ERROR: Resume doesn't exist");
+            return;
         }
 
     }
@@ -64,7 +90,6 @@ public class ArrayStorage {
     }
 
     public int size() {
-
         return storageSize;
     }
 
