@@ -1,28 +1,29 @@
+package ru.mshatunov.basejava.storage;
+
+import ru.mshatunov.basejava.model.Resume;
+
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
 public class ArrayStorage {
 
-    final static int MAX_STORAGE_SIZE = 10000;
-    Resume[] storage = new Resume[MAX_STORAGE_SIZE];
-    int storageSize;
+    private static final int MAX_STORAGE_SIZE = 10000;
+    private Resume[] storage = new Resume[MAX_STORAGE_SIZE];
+    private int storageSize;
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, null);
         storageSize = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         storage[storageSize] = r;
         storageSize++;
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
 
         for (Resume r : storage) {
-            if (r != null && r.uuid == uuid) {
+            if (r != null && r.getUuid().equals(uuid)) {
                 return r;
             } else if (r == null) {
                 return null;
@@ -33,12 +34,12 @@ public class ArrayStorage {
 
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
 
         for (int i = 0; i < storage.length; i++) {
-            if (storage[i].uuid == uuid) {
-                storage[i] = storage[storageSize-1];
-                storage[storageSize-1] = null;
+            if (storage[i].getUuid().equals(uuid)) {
+                storage[i] = storage[storageSize - 1];
+                storage[storageSize - 1] = null;
                 storageSize--;
                 return;
             } else if (storage[i] == null) {
@@ -51,7 +52,7 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
 
         Resume[] allResume = new Resume[storageSize];
 
@@ -62,7 +63,7 @@ public class ArrayStorage {
 
     }
 
-    int size() {
+    public int size() {
 
         return storageSize;
     }
