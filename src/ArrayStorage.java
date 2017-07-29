@@ -5,22 +5,18 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
-    final static int STORAGE_SIZE = 10000;
-    Resume[] storage = new Resume[STORAGE_SIZE];
+    final static int MAX_STORAGE_SIZE = 10000;
+    Resume[] storage = new Resume[MAX_STORAGE_SIZE];
+    int storageSize;
 
     void clear() {
         Arrays.fill(storage, null);
+        storageSize = 0;
     }
 
     void save(Resume r) {
-
-        int size = this.size();
-
-        if (size < STORAGE_SIZE) {
-            storage[size] = r;
-            this.sort();
-        }
-
+        storage[storageSize] = r;
+        storageSize++;
     }
 
     Resume get(String uuid) {
@@ -39,15 +35,17 @@ public class ArrayStorage {
 
     void delete(String uuid) {
 
-        for (int count = 0; count < storage.length; count++) {
-            if (storage[count].uuid == uuid) {
-                storage[count] = null;
-                this.sort();
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i].uuid == uuid) {
+                storage[i] = storage[storageSize-1];
+                storage[storageSize-1] = null;
+                storageSize--;
                 return;
-            } else if (storage[count] == null) {
+            } else if (storage[i] == null) {
                 return;
             }
         }
+
     }
 
     /**
@@ -55,11 +53,10 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
 
-        int size = this.size();
-        Resume[] allResume = new Resume[size];
+        Resume[] allResume = new Resume[storageSize];
 
-        for (int count = 0; count < size; count++) {
-            allResume[count] = storage[count];
+        for (int i = 0; i < storageSize; i++) {
+            allResume[i] = storage[i];
         }
         return allResume;
 
@@ -67,21 +64,7 @@ public class ArrayStorage {
 
     int size() {
 
-        this.sort();
-
-        int count = 0;
-        for (Resume r : storage) {
-            if (r != null) {
-                count++;
-            } else {
-                return count;
-            }
-        }
-        return count;
-    }
-
-    void sort() {
-        Arrays.sort(storage, new ResumeComparator());
+        return storageSize;
     }
 
 }
