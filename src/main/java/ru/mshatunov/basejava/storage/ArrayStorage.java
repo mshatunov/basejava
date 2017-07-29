@@ -10,19 +10,14 @@ public class ArrayStorage {
     private Resume[] storage = new Resume[MAX_STORAGE_SIZE];
     private int storageSize;
 
-    public void clear() {
-        Arrays.fill(storage, null);
-        storageSize = 0;
-    }
-
     public void save(Resume r) {
 
-        if (storageSize + 1 > MAX_STORAGE_SIZE) {
+        if (storageSize == MAX_STORAGE_SIZE) {
             System.out.println("ERROR: Maximum storage size reached");
             return;
         }
 
-        if (get(r.getUuid()) != null) {
+        if (getIndex(r.getUuid()) >= 0) {
             System.out.println("ERROR: Resume already exists");
             return;
         } else {
@@ -33,44 +28,42 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        if (get(r.getUuid()) != null) {
-            //update
+        int index = getIndex(r.getUuid());
+        if (index >= 0) {
+            storage[index] = r;
         } else {
             System.out.println("ERROR: Resume doesn't exist");
             return;
         }
-    }
-
-    public Resume get(String uuid) {
-
-        for (Resume r : storage) {
-            if (r != null && r.getUuid().equals(uuid)) {
-                return r;
-            } else if (r == null) {
-                return null;
-            }
-        }
-
-        return null;
-
     }
 
     public void delete(String uuid) {
 
-        if (get(uuid) != null) {
-            for (int i = 0; i < storage.length; i++) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    storage[i] = storage[storageSize - 1];
-                    storage[storageSize - 1] = null;
-                    storageSize--;
-                    return;
-                } else if (storage[i] == null) {
-                    return;
-                }
-            }
+        int index = getIndex(uuid);
+        if (getIndex(uuid) >= 0) {
+            storage[index] = storage[storageSize - 1];
+            storage[storageSize - 1] = null;
+            storageSize--;
+            return;
         } else {
             System.out.println("ERROR: Resume doesn't exist");
             return;
+        }
+
+    }
+
+    public void clear() {
+        Arrays.fill(storage, null);
+        storageSize = 0;
+    }
+
+    public Resume get(String uuid) {
+
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            return storage[index];
+        } else {
+            return null;
         }
 
     }
@@ -91,6 +84,17 @@ public class ArrayStorage {
 
     public int size() {
         return storageSize;
+    }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i] == null) {
+                break;
+            } else if (storage[i].getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }
