@@ -53,7 +53,7 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, storageSize, null);
         storageSize = 0;
     }
 
@@ -72,14 +72,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-
-        Resume[] allResume = new Resume[storageSize];
-
-        for (int i = 0; i < storageSize; i++) {
-            allResume[i] = storage[i];
-        }
-        return allResume;
-
+        return Arrays.copyOfRange(storage, 0, storageSize);
     }
 
     public int size() {
