@@ -2,7 +2,7 @@ package ru.mshatunov.basejava.storage;
 
 import ru.mshatunov.basejava.model.Resume;
 
-interface Storage {
+public interface Storage {
 
     void save(Resume r);
 
