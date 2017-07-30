@@ -4,11 +4,7 @@ import ru.mshatunov.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public class ArrayStorage implements Storage {
-
-    private static final int MAX_STORAGE_SIZE = 10000;
-    private Resume[] storage = new Resume[MAX_STORAGE_SIZE];
-    private int storageSize;
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void save(Resume r) {
 
@@ -57,17 +53,6 @@ public class ArrayStorage implements Storage {
         storageSize = 0;
     }
 
-    public Resume get(String uuid) {
-
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        } else {
-            return null;
-        }
-
-    }
-
     /**
      * @return array, contains only Resumes in storage (without null)
      */
@@ -75,11 +60,7 @@ public class ArrayStorage implements Storage {
         return Arrays.copyOfRange(storage, 0, storageSize);
     }
 
-    public int size() {
-        return storageSize;
-    }
-
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 break;
