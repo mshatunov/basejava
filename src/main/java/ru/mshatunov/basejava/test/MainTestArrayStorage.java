@@ -1,11 +1,11 @@
 package ru.mshatunov.basejava.test;
 
 import ru.mshatunov.basejava.model.Resume;
-import ru.mshatunov.basejava.storage.ArrayStorage;
+import ru.mshatunov.basejava.storage.SortedArrayStorage;
 import ru.mshatunov.basejava.storage.Storage;
 
 public class MainTestArrayStorage {
-    static final Storage ARRAY_STORAGE = new ArrayStorage();
+    static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
