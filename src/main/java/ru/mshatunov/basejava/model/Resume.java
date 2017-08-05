@@ -3,10 +3,7 @@ package ru.mshatunov.basejava.model;
 public class Resume implements Comparable<Resume> {
 
     //Unique identifier
-    private String uuid;
-
-    public Resume() {
-    }
+    private final String uuid;
 
     public Resume(String uuid) {
         this.uuid = uuid;
@@ -14,10 +11,6 @@ public class Resume implements Comparable<Resume> {
 
     public String getUuid() {
         return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     @Override
