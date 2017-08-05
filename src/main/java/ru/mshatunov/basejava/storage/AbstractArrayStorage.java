@@ -1,5 +1,8 @@
 package ru.mshatunov.basejava.storage;
 
+import ru.mshatunov.basejava.exception.ResumeAlreadyExistsStorageException;
+import ru.mshatunov.basejava.exception.ResumeNotExistsStorageException;
+import ru.mshatunov.basejava.exception.StorageException;
 import ru.mshatunov.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -8,8 +11,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     private static final int MAX_STORAGE_SIZE = 10000;
 
-    protected Resume[] storage = new Resume[MAX_STORAGE_SIZE];
-    protected int storageSize;
+    Resume[] storage = new Resume[MAX_STORAGE_SIZE];
+    int storageSize;
 
     public int size() {
         return storageSize;
@@ -18,12 +21,12 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
 
         if (storageSize == MAX_STORAGE_SIZE) {
-            System.out.println("ERROR: Maximum storage size reached");
+            throw new StorageException("Maximum storage size reached", r.getUuid());
         }
 
         int index = getIndex(r.getUuid());
         if (index >= 0) {
-            System.out.println("ERROR: Resume already exists");
+            throw new ResumeAlreadyExistsStorageException(r.getUuid());
         } else {
             insertElement(r, index);
             storageSize++;
@@ -39,7 +42,7 @@ public abstract class AbstractArrayStorage implements Storage {
             storage[storageSize - 1] = null;
             storageSize--;
         } else {
-            System.out.println("ERROR: Resume doesn't exist");
+            throw new ResumeNotExistsStorageException(uuid);
         }
 
     }
@@ -49,7 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = r;
         } else {
-            System.out.println("ERROR: Resume doesn't exist");
+            throw new ResumeNotExistsStorageException(r.getUuid());
         }
     }
 
@@ -57,8 +60,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " doesn't exist");
-            return null;
+            throw new ResumeNotExistsStorageException(uuid);
         }
         return storage[index];
 
