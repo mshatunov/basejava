@@ -10,11 +10,12 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractArrayStorageTest {
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
-    Storage storage;
+    static final String UUID_0 = "uuid0";
+    static final String UUID_1 = "uuid1";
+    static final String UUID_2 = "uuid2";
+    static final String UUID_3 = "uuid3";
+    static final String UUID_4 = "uuid4";
+    AbstractArrayStorage storage;
 
     @Before
     public void setUp() throws Exception {
@@ -72,6 +73,11 @@ public abstract class AbstractArrayStorageTest {
     public void clear() throws Exception {
         storage.clear();
         assertArrayEquals(storage.getAll(), new Resume[]{});
+    }
+
+    @Test
+    public void getIndex() throws Exception {
+        assertEquals(1, storage.getIndex(UUID_2));
     }
 
 }
