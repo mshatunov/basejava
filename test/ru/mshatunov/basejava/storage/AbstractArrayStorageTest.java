@@ -2,11 +2,12 @@ package ru.mshatunov.basejava.storage;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.mshatunov.basejava.exception.ResumeAlreadyExistsStorageException;
 import ru.mshatunov.basejava.exception.ResumeNotExistsStorageException;
+import ru.mshatunov.basejava.exception.StorageException;
 import ru.mshatunov.basejava.model.Resume;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public abstract class AbstractArrayStorageTest {
 
@@ -41,15 +42,29 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void size() throws Exception {
         assertEquals(3, storage.size());
-
-        storage.save(RESUME_4);
-        assertEquals(4, storage.size());
     }
 
     @Test
     public void save() throws Exception {
         storage.save(RESUME_4);
         assertEquals(storage.get(UUID_4).getUuid(), UUID_4);
+    }
+
+    @Test(expected = ResumeAlreadyExistsStorageException.class)
+    public void saveExist() throws Exception {
+        storage.save(RESUME_1);
+    }
+
+    @Test(expected = StorageException.class)
+    public void saveOverflow() throws Exception {
+        try {
+            for (int i = 4; i <= AbstractArrayStorage.MAX_STORAGE_SIZE; i++) {
+                storage.save(new Resume());
+            }
+        } catch (StorageException e) {
+            fail();
+        }
+        storage.save(new Resume());
     }
 
     @Test(expected = ResumeNotExistsStorageException.class)
