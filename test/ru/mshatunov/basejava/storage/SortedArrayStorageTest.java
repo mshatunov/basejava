@@ -1,24 +1,18 @@
 package ru.mshatunov.basejava.storage;
 
-import org.junit.Before;
 import org.junit.Test;
-import ru.mshatunov.basejava.model.Resume;
 
 import static org.junit.Assert.assertEquals;
 
 public class SortedArrayStorageTest extends AbstractArrayStorageTest {
 
-    SortedArrayStorage storage = new SortedArrayStorage();
-
-    @Before
-    public void setUp() throws Exception {
-        super.storage = storage;
-        super.setUp();
+    public SortedArrayStorageTest() {
+        super(new SortedArrayStorage());
     }
 
     @Test
     public void insertElement() throws Exception {
-        storage.save(new Resume(UUID_0));
+        storage.save(RESUME_0);
         assertEquals(0, storage.getIndex(UUID_0));
     }
 

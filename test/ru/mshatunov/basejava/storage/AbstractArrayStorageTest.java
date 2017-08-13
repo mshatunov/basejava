@@ -11,30 +11,44 @@ import static org.junit.Assert.assertEquals;
 public abstract class AbstractArrayStorageTest {
 
     static final String UUID_0 = "uuid0";
+    static final Resume RESUME_0 = new Resume(UUID_0);
+
     static final String UUID_1 = "uuid1";
+    static final Resume RESUME_1 = new Resume(UUID_1);
+
     static final String UUID_2 = "uuid2";
+    static final Resume RESUME_2 = new Resume(UUID_2);
+
     static final String UUID_3 = "uuid3";
+    static final Resume RESUME_3 = new Resume(UUID_3);
+
     static final String UUID_4 = "uuid4";
+    static final Resume RESUME_4 = new Resume(UUID_4);
+
     AbstractArrayStorage storage;
+
+    AbstractArrayStorageTest(AbstractArrayStorage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() throws Exception {
-        storage.save(new Resume(UUID_1));
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
     }
 
     @Test
     public void size() throws Exception {
         assertEquals(3, storage.size());
 
-        storage.save(new Resume(UUID_4));
+        storage.save(RESUME_4);
         assertEquals(4, storage.size());
     }
 
     @Test
     public void save() throws Exception {
-        storage.save(new Resume(UUID_4));
+        storage.save(RESUME_4);
         assertEquals(storage.get(UUID_4).getUuid(), UUID_4);
     }
 
@@ -66,7 +80,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        assertArrayEquals(storage.getAll(), new Resume[]{new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)});
+        assertArrayEquals(storage.getAll(), new Resume[]{RESUME_1, RESUME_2, RESUME_3});
     }
 
     @Test

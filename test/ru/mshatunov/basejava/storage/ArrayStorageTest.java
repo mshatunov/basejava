@@ -1,25 +1,18 @@
 package ru.mshatunov.basejava.storage;
 
-import org.junit.Before;
 import org.junit.Test;
-import ru.mshatunov.basejava.model.Resume;
 
 import static org.junit.Assert.assertEquals;
 
 public class ArrayStorageTest extends AbstractArrayStorageTest {
 
-    ArrayStorage storage = new ArrayStorage();
-
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.storage = storage;
-        super.setUp();
+    public ArrayStorageTest() {
+        super(new ArrayStorage());
     }
 
     @Test
     public void insertElement() throws Exception {
-        storage.save(new Resume(UUID_0));
+        storage.save(RESUME_0);
         assertEquals(3, storage.getIndex(UUID_0));
     }
 
