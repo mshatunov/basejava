@@ -3,7 +3,9 @@ package ru.mshatunov.basejava.storage;
 import ru.mshatunov.basejava.exception.StorageException;
 import ru.mshatunov.basejava.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage {
 
@@ -48,11 +50,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return (Integer) index >= 0;
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, storageSize);
+    public List<Resume> getAllSorted() {
+        List<Resume> list = new ArrayList<>();
+        list = Arrays.asList(Arrays.copyOfRange(storage, 0, storageSize));
+        list.sort((o1, o2) -> o1.getFullName().compareTo(o2.getFullName()));
+        return list;
     }
 
     public void clear() {

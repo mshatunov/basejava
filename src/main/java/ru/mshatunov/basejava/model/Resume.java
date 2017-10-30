@@ -26,7 +26,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     public String getFullName() {
-        return fullName;
+        return fullName == null ? " " : fullName;
     }
 
     @Override
