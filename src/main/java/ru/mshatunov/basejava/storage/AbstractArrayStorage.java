@@ -1,13 +1,11 @@
 package ru.mshatunov.basejava.storage;
 
-import ru.mshatunov.basejava.exception.ResumeAlreadyExistsStorageException;
-import ru.mshatunov.basejava.exception.ResumeNotExistsStorageException;
 import ru.mshatunov.basejava.exception.StorageException;
 import ru.mshatunov.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected static final int MAX_STORAGE_SIZE = 10000;
 
@@ -18,52 +16,36 @@ public abstract class AbstractArrayStorage implements Storage {
         return storageSize;
     }
 
-    public void save(Resume r) {
+    @Override
+    protected void doSave(Resume r, Object index) {
 
         if (storageSize == MAX_STORAGE_SIZE) {
             throw new StorageException("Maximum storage size reached", r.getUuid());
         }
-
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ResumeAlreadyExistsStorageException(r.getUuid());
-        } else {
-            insertElement(r, index);
-            storageSize++;
-        }
-
+        insertElement(r, (Integer) index);
+        storageSize++;
     }
 
-    public void delete(String uuid) {
-
-        int index = getIndex(uuid);
-        if (getIndex(uuid) >= 0) {
-            fillDeletedElement(index);
-            storage[storageSize - 1] = null;
-            storageSize--;
-        } else {
-            throw new ResumeNotExistsStorageException(uuid);
-        }
-
+    @Override
+    protected void doDelete(Object index) {
+        fillDeletedElement((Integer) index);
+        storage[storageSize - 1] = null;
+        storageSize--;
     }
 
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index >= 0) {
-            storage[index] = r;
-        } else {
-            throw new ResumeNotExistsStorageException(r.getUuid());
-        }
+    @Override
+    protected void doUpdate(Resume r, Object index) {
+        storage[(Integer) index] = r;
     }
 
-    public Resume get(String uuid) {
+    @Override
+    protected Resume doGet(Object index) {
+        return storage[(Integer) index];
+    }
 
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new ResumeNotExistsStorageException(uuid);
-        }
-        return storage[index];
-
+    @Override
+    protected boolean isExist(Object index) {
+        return (Integer) index >= 0;
     }
 
     /**
@@ -78,7 +60,7 @@ public abstract class AbstractArrayStorage implements Storage {
         storageSize = 0;
     }
 
-    protected abstract int getIndex(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 
     protected abstract void insertElement(Resume r, int index);
 
