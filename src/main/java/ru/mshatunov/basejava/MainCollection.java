@@ -7,19 +7,19 @@ import java.util.*;
 public class MainCollection {
 
     static final String UUID_0 = "uuid0";
-    static final Resume RESUME_0 = new Resume(UUID_0);
+    static final Resume RESUME_0 = new Resume(UUID_0, "Name");
 
     static final String UUID_1 = "uuid1";
-    static final Resume RESUME_1 = new Resume(UUID_1);
+    static final Resume RESUME_1 = new Resume(UUID_1, "Name");
 
     static final String UUID_2 = "uuid2";
-    static final Resume RESUME_2 = new Resume(UUID_2);
+    static final Resume RESUME_2 = new Resume(UUID_2, "Name");
 
     static final String UUID_3 = "uuid3";
-    static final Resume RESUME_3 = new Resume(UUID_3);
+    static final Resume RESUME_3 = new Resume(UUID_3, "Name");
 
     static final String UUID_4 = "uuid4";
-    static final Resume RESUME_4 = new Resume(UUID_4);
+    static final Resume RESUME_4 = new Resume(UUID_4, "Name");
 
     public static void main(String[] args) {
 

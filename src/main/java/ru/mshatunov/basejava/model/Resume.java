@@ -8,12 +8,8 @@ public class Resume implements Comparable<Resume> {
 
     private final String fullName;
 
-    public Resume() {
-        this(UUID.randomUUID().toString(), null);
-    }
-
-    public Resume(String uuid) {
-        this(uuid, null);
+    public Resume(String fullName) {
+        this(UUID.randomUUID().toString(), fullName);
     }
 
     public Resume(String uuid, String fullName) {
@@ -26,7 +22,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     public String getFullName() {
-        return fullName == null ? " " : fullName;
+        return fullName;
     }
 
     @Override
@@ -36,14 +32,14 @@ public class Resume implements Comparable<Resume> {
 
         Resume resume = (Resume) o;
 
-        if (getUuid() != null ? !getUuid().equals(resume.getUuid()) : resume.getUuid() != null) return false;
-        return getFullName() != null ? getFullName().equals(resume.getFullName()) : resume.getFullName() == null;
+        if (!getUuid().equals(resume.getUuid())) return false;
+        return getFullName().equals(resume.getFullName());
     }
 
     @Override
     public int hashCode() {
-        int result = getUuid() != null ? getUuid().hashCode() : 0;
-        result = 31 * result + (getFullName() != null ? getFullName().hashCode() : 0);
+        int result = getUuid().hashCode();
+        result = 31 * result + getFullName().hashCode();
         return result;
     }
 
