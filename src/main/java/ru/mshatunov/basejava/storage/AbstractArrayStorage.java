@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int MAX_STORAGE_SIZE = 10000;
 
@@ -19,35 +19,35 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doSave(Resume r, Object index) {
+    protected void doSave(Resume r, Integer index) {
 
         if (storageSize == MAX_STORAGE_SIZE) {
             throw new StorageException("Maximum storage size reached", r.getUuid());
         }
-        insertElement(r, (Integer) index);
+        insertElement(r, index);
         storageSize++;
     }
 
     @Override
-    protected void doDelete(Object index) {
-        fillDeletedElement((Integer) index);
+    protected void doDelete(Integer index) {
+        fillDeletedElement(index);
         storage[storageSize - 1] = null;
         storageSize--;
     }
 
     @Override
-    protected void doUpdate(Resume r, Object index) {
-        storage[(Integer) index] = r;
+    protected void doUpdate(Resume r, Integer index) {
+        storage[index] = r;
     }
 
     @Override
-    protected Resume doGet(Object index) {
-        return storage[(Integer) index];
+    protected Resume doGet(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     public List<Resume> getAllSorted() {
