@@ -4,6 +4,8 @@ import ru.mshatunov.basejava.exception.ResumeAlreadyExistsStorageException;
 import ru.mshatunov.basejava.exception.ResumeNotExistsStorageException;
 import ru.mshatunov.basejava.model.Resume;
 
+import java.util.List;
+
 public abstract class AbstractStorage<T> implements Storage {
 
     protected abstract T getSearchKey(String uuid);
@@ -17,6 +19,8 @@ public abstract class AbstractStorage<T> implements Storage {
     protected abstract void doDelete(T searchKey);
 
     protected abstract Resume doGet(T searchKey);
+
+    protected abstract List<Resume> doCopyAll();
 
     public void update(Resume r) {
         T searchKey = getExistedSearchKey(r.getUuid());
