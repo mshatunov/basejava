@@ -49,7 +49,6 @@ public class ListStorage extends AbstractStorage<Integer> {
         list.clear();
     }
 
-    @Override
     public List<Resume> getAllSorted() {
         list.sort((o1, o2) -> o1.getFullName().compareTo(o2.getFullName()));
         return list;

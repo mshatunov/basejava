@@ -7,11 +7,16 @@ import ru.mshatunov.basejava.exception.ResumeNotExistsStorageException;
 import ru.mshatunov.basejava.exception.StorageException;
 import ru.mshatunov.basejava.model.*;
 
+import java.io.File;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
+
+    protected static final File STORAGE_DIR = new File("/Users/mshatunov/IdeaProjects/basejava/test/resources");
 
     static final String UUID_0 = "uuid0";
     static final Resume RESUME_0 = new Resume(UUID_0, "Name0");
@@ -62,6 +67,7 @@ public abstract class AbstractStorageTest {
 
     @Before
     public void setUp() throws Exception {
+        storage.clear();
         storage.save(RESUME_1);
         storage.save(RESUME_2);
         storage.save(RESUME_3);
@@ -96,7 +102,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws Exception {
-        //no update implemented yet
+        Resume newResume = new Resume(UUID_1, "New Name");
+        storage.update(newResume);
+        assertTrue(newResume.equals(storage.get(UUID_1)));
     }
 
     @Test
@@ -110,14 +118,9 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAllSorted() throws Exception {
-        assertArrayEquals(storage.getAllSorted().toArray(), new Resume[]{RESUME_1, RESUME_2, RESUME_3});
-    }
-
-    @Test
     public void clear() throws Exception {
         storage.clear();
-        assertArrayEquals(storage.getAllSorted().toArray(), new Resume[]{});
+        assertEquals(0, storage.size());
     }
 
 }
