@@ -1,10 +1,16 @@
 package ru.mshatunov.basejava.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TextSection extends Section {
 
-    private final String content;
+    private String content;
+
+    public TextSection() {
+    }
 
     public TextSection(String content) {
         Objects.requireNonNull(content, "content must not be null");

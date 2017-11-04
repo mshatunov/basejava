@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
                 SortedArrayStorageTest.class,
                 ListStorageTest.class,
                 ObjectPathStorageTest.class,
-                ObjectFileStorageTest.class
+                ObjectFileStorageTest.class,
+                XmlPathStorageTest.class
         })
 public class AllStorageTest {
 }
