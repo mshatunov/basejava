@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("/Users/mshatunov/IdeaProjects/basejava/test/resources");
+    protected static final File STORAGE_DIR = new File("/Users/mshatunov/Documents/IdeaProjects/basejava/src/test/resources");
 
     static final String UUID_0 = "uuid0";
     static final Resume RESUME_0 = new Resume(UUID_0, "Name0");
