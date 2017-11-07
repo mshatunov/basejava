@@ -2,21 +2,20 @@ package ru.mshatunov.basejava.storage;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.mshatunov.basejava.Config;
 import ru.mshatunov.basejava.exception.ResumeAlreadyExistsStorageException;
 import ru.mshatunov.basejava.exception.ResumeNotExistsStorageException;
-import ru.mshatunov.basejava.exception.StorageException;
 import ru.mshatunov.basejava.model.*;
 
 import java.io.File;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("/Users/mshatunov/Documents/IdeaProjects/basejava/src/test/resources");
+    protected static final File STORAGE_DIR = Config.getInstance().getStorageDir();
 
     static final String UUID_0 = "uuid0";
     static final Resume RESUME_0 = new Resume(UUID_0, "Name0");
