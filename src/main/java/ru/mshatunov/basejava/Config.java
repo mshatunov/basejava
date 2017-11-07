@@ -12,21 +12,39 @@ public class Config {
 
     Properties properties = new Properties();
     private File storageDir;
+    private String dbUrl;
+    private String dbUser;
+    private String dbPassword;
 
     private Config() {
         try (InputStream is = new FileInputStream(PROPS)) {
             properties.load(is);
             storageDir = new File(properties.getProperty("storage.dir"));
+            dbUrl = properties.getProperty("db.url");
+            dbUser = properties.getProperty("db.user");
+            dbPassword = properties.getProperty("db.password");
         } catch (IOException e) {
             throw new IllegalStateException("Invalid config file " + PROPS.getAbsolutePath());
         }
+    }
+
+    public static Config getInstance() {
+        return INSTANCE;
     }
 
     public File getStorageDir() {
         return storageDir;
     }
 
-    public static Config getInstance() {
-        return INSTANCE;
+    public String getDbUrl() {
+        return dbUrl;
+    }
+
+    public String getDbUser() {
+        return dbUser;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
     }
 }
