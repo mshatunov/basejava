@@ -91,7 +91,8 @@ public class FileStorage extends AbstractStorage<File> {
         }
     }
 
-    protected List<Resume> doCopyAll() {
+    @Override
+    public List<Resume> getAllSorted() {
         File[] files = directory.listFiles();
         if (files == null) {
             throw new StorageException("Directory read error");
